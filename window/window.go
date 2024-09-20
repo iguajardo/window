@@ -13,22 +13,32 @@ func NewWindow(width int, height int) *Window {
 }
 
 func (w *Window) Init() {
+	// topLeft, topRight := '╔', '╗'
+	// bottomLeft, bottomRight := '╚', '╝'
+	// horizontal, vertical := '═', '║'
+	vertical := '\u2551'
+
 	w.buffer = w.createBuffer()
-  for i := 0; i < len(w.buffer); i++ {
-    if i % w.width == 0 {
-      w.buffer[i] = '\n'
-    } else {
-      w.buffer[i] = '#'
-    }
-  }
+	for y := 0; y < w.height+2; y++ {
+		firstVerticalX := y * (w.width + 3)
+		secondVerticalX := firstVerticalX + w.width + 1
+
+		w.buffer[firstVerticalX] = vertical
+		w.buffer[secondVerticalX] = vertical
+		w.buffer[secondVerticalX+1] = '\n'
+
+		for x := 1; x < w.width+1; x++ {
+			w.buffer[firstVerticalX+x] = '#'
+		}
+	}
 }
 
 func (w *Window) createBuffer() []rune {
-	buffer := make([]rune, w.width*w.height)
+	buffer := make([]rune, (w.width+3)*(w.height+2))
 	return buffer
 }
 
 func (w *Window) Draw() {
-  fmt.Printf("%s", string(w.buffer))
-  fmt.Println()
+	fmt.Printf("%s", string(w.buffer))
+	fmt.Println()
 }
