@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	window := window.NewWindow(25, 25)
+	window := window.NewWindow(13, 5)
   err := window.Init()
   if err != nil {
     fmt.Printf("error initializing window %v\n", err)
